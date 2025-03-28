@@ -184,6 +184,16 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="master.csv" />
+    <None Include="records.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ListNode.hpp" />
+    <ClInclude Include="Menu.hpp" />
+    <ClInclude Include="RecordData.hpp" />
+    <ClInclude Include="RecordList.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
