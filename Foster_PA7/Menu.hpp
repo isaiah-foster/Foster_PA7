@@ -47,6 +47,7 @@ int Menu::getUserChoice() const
 	{
 		std::cin >> choice;
 	}
+	system("cls");
 	return choice;
 }
 
@@ -58,7 +59,7 @@ void Menu::importRecords(const std::string& filename)
 
 void Menu::runProgram()
 {
-	int choice;
+	int choice=0, loaded=0, stored=0;
 	do
 	{
 		displayMenu();
@@ -66,10 +67,17 @@ void Menu::runProgram()
 		switch (choice)
 		{
 		case 1:
-			importRecords("records.txt");
+			importRecords("records.csv");
 			break;
 		case 2:
-			std::cout << "Load Master List functionality not implemented." << std::endl;
+			if (!stored)
+			{
+				std::cout << "please import at store records first";
+			}
+			else
+			{
+				importRecords("master.csv");
+			}
 			break;
 		case 3:
 			std::cout << "Store Master List functionality not implemented." << std::endl;
