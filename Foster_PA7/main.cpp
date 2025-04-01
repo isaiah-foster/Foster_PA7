@@ -11,8 +11,8 @@
 
 int main(void)
 {
-	
-
+	Menu menu;
+	menu.runProgram();
 
 	return 0;
 }

@@ -9,10 +9,12 @@
 */
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <stack>
 #include <string>
 using std::string;
 using std::istream;
+using std::ostream;
 using std::getline;
 
 class RecordData
@@ -28,9 +30,11 @@ private:
 	int absences;
 	std::stack<string> absenceDates;
 
+
 public:
 	RecordData();
 	friend void operator>>(istream& lhs, RecordData& rhs);
+	friend ostream& operator<<(ostream& lhs, const RecordData& rhs);
 };
 
 RecordData::RecordData()
@@ -60,4 +64,10 @@ void operator>>(istream& lhs, RecordData& rhs)
 	rhs.units = std::stoi(temp);
 	getline(lhs, rhs.program, ',');
 	getline(lhs, rhs.level);
+}
+
+ostream& operator<<(ostream& lhs, const RecordData& rhs)
+{
+	lhs << rhs.recordNumber << "," << rhs.IDNumber << "," << rhs.name << "," << rhs.email << "," << rhs.units << "," << rhs.program << "," << rhs.level;
+	return lhs;
 }

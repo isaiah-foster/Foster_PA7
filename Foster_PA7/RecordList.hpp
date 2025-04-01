@@ -25,6 +25,7 @@ public:
 	void destroy();
 	void print() const;
 	void import(const std::string& filename);
+	void store(const std::string& filename);
 };
 
 template <typename T>
@@ -43,7 +44,7 @@ template <typename T>
 void RecordList<T>::insertAtFront(const T& data)
 {
 	ListNode<T>* newNode = new ListNode<T>(data);
-	newNode->pNext = pHead;
+	newNode->setNext(pHead);
 	pHead = newNode;
 }
 
@@ -56,7 +57,7 @@ void RecordList<T>::removeFromFront()
 		return;
 	}
 	ListNode<T>* temp = pHead;
-	pHead = pHead->pNext;
+	pHead = pHead->getNext();
 	delete temp;
 }
 
@@ -97,9 +98,28 @@ void RecordList<T>::import(const std::string& filename)
 		return;
 	}
 	T data;
-	while (file >> data)
+	file >> data;
+	while (!file.eof())
 	{
 		insertAtFront(data);
+	}
+	file.close();
+}
+
+template <typename T>
+void RecordList<T>::store(const std::string& filename)
+{
+	std::ofstream file(filename);
+	if (!file)
+	{
+		std::cerr << "Error opening file: " << filename << std::endl;
+		return;
+	}
+	ListNode<T>* current = pHead;
+	while (current != nullptr)
+	{
+		file << current->getData() << std::endl;
+		current = current->getNext() ;
 	}
 	file.close();
 }

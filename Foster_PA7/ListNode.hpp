@@ -15,15 +15,15 @@ class ListNode
 {
 private:
 	T data;
-	T* pNext;
+	ListNode<T>* pNext;
 
 public:
 
 	ListNode(const T& data); 
 	~ListNode();
 	T getData() const;
-	T* getNext() const;
-	void setNext(T* next);
+	ListNode<T>* getNext() const;
+	void setNext(ListNode<T>* next);
 };
 
 template <typename T>
@@ -45,13 +45,13 @@ T ListNode<T>::getData() const
 }
 
 template <typename T>
-T* ListNode<T>::getNext() const
+ListNode<T>* ListNode<T>::getNext() const
 {
 	return pNext;
 }
 
 template <typename T>
-void ListNode<T>::setNext(T* next)
+void ListNode<T>::setNext(ListNode<T>* next)
 {
 	pNext = next;
 }

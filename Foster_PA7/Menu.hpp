@@ -55,12 +55,13 @@ void Menu::importRecords(const std::string& filename)
 {
 	recordList.import(filename);
 	std::cout << "Records imported successfully." << std::endl;
+	system("pause");
 }
 
 void Menu::runProgram()
 {
-	int choice=0, loaded=0, stored=0;
-	do
+	int choice = 0, loaded = 0, stored = 0;
+	while (true)
 	{
 		displayMenu();
 		choice = getUserChoice();
@@ -68,19 +69,24 @@ void Menu::runProgram()
 		{
 		case 1:
 			importRecords("records.csv");
+			loaded = 1;
 			break;
 		case 2:
 			if (!stored)
 			{
-				std::cout << "please import at store records first";
+				std::cout << "please store course list first";
 			}
 			else
 			{
 				importRecords("master.csv");
+				loaded = 1;
 			}
 			break;
 		case 3:
-			std::cout << "Store Master List functionality not implemented." << std::endl;
+			recordList.store("master.csv");
+			stored = 1;
+			std::cout << "Master list stored successfully." << std::endl;
+			system("pause");
 			break;
 		case 4:
 			std::cout << "Mark Absences functionality not implemented." << std::endl;
@@ -93,9 +99,10 @@ void Menu::runProgram()
 			break;
 		case 7:
 			std::cout << "Exiting program." << std::endl;
+			exit(0);
 			break;
 		default:
 			std::cout << "Invalid choice, please try again." << std::endl;
 		}
-	} while (choice != 7);
+	}
 }
