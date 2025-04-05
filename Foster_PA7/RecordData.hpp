@@ -33,6 +33,7 @@ private:
 
 public:
 	RecordData();
+	int getAbsences();
 	friend void operator>>(istream& lhs, RecordData& rhs);
 	friend ostream& operator<<(ostream& lhs, const RecordData& rhs);
 };

@@ -117,12 +117,10 @@ void RecordList<T>::importMaster(const std:: string& filename)
 		return;
 	}
 	T data;
-
-
-
 	while (!file.eof())
 	{
 		file >> data;
+
 		insertAtFront(data);
 	}
 	file.close();
