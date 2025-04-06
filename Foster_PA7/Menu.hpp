@@ -19,6 +19,7 @@ public:
 	void displayMenu() const;
 	int getUserChoice() const;
 	void importRecords(const std::string& filename);
+	void importMasterRecords(const std::string& filename);
 	
 	void runProgram();
 };
@@ -58,6 +59,14 @@ void Menu::importRecords(const std::string& filename)
 	system("pause");
 }
 
+void Menu::importMasterRecords(const std::string& filename)
+{
+	recordList.importMaster(filename);
+	std::cout << "Records imported successfully." << std::endl;
+	system("pause");
+}
+
+
 void Menu::runProgram()
 {
 	int choice = 0, loaded = 0, stored = 0;
@@ -78,7 +87,7 @@ void Menu::runProgram()
 			}
 			else
 			{
-				importRecords("master.csv");
+				importMasterRecords("master.csv");
 				loaded = 1;
 			}
 			break;

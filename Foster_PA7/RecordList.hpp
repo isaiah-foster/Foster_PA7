@@ -25,6 +25,7 @@ public:
 	void destroy();
 	void print() const;
 	void import(const std::string& filename);
+	void importMaster(const std::string& filename);
 	void store(const std::string& filename);
 };
 
@@ -98,9 +99,30 @@ void RecordList<T>::import(const std::string& filename)
 		return;
 	}
 	T data;
-	file >> data;
 	while (!file.eof())
 	{
+	file >> data;
+		insertAtFront(data);
+	}
+	file.close();
+}
+
+template <typename T>
+void RecordList<T>::importMaster(const std:: string& filename)
+{
+	std::ifstream file(filename);
+	if (!file)
+	{
+		std::cerr << "Error opening file: " << filename << std::endl;
+		return;
+	}
+	T data;
+
+
+
+	while (!file.eof())
+	{
+		file >> data;
 		insertAtFront(data);
 	}
 	file.close();
@@ -115,7 +137,7 @@ void RecordList<T>::store(const std::string& filename)
 		std::cerr << "Error opening file: " << filename << std::endl;
 		return;
 	}
-	ListNode<T>* current = pHead;
+	ListNode<RecordData>* current = pHead;
 	while (current != nullptr)
 	{
 		file << current->getData() << std::endl;

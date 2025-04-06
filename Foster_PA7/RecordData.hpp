@@ -24,7 +24,7 @@ private:
 	int IDNumber;
 	string name;
 	string email;
-	int units;
+	string units;
 	string program;
 	string level;
 	int absences;
@@ -43,25 +43,27 @@ RecordData::RecordData()
 	IDNumber = 0;
 	name = "";
 	email = "";
-	units = 0;
+	units = "";
 	program = "";
 	level = "";
 	absences = 0;
 	absenceDates = std::stack<string>();
 }
 
+//outputs a record not including its absences
 void operator>>(istream& lhs, RecordData& rhs)
-{
+{	
 	string temp;
 	getline(lhs, temp); //get rid of first line
 	getline(lhs, temp, ',');
 	rhs.recordNumber = std::stoi(temp);
 	getline(lhs, temp, ',');
 	rhs.IDNumber = std::stoi(temp);
-	getline(lhs, rhs.name, ',');
+	getline(lhs, rhs.name, '"');
+	getline(lhs, rhs.name, '"');
 	getline(lhs, rhs.email, ',');
-	getline(lhs, temp, ',');
-	rhs.units = std::stoi(temp);
+	getline(lhs, rhs.email, ',');
+	getline(lhs, rhs.units, ',');
 	getline(lhs, rhs.program, ',');
 	getline(lhs, rhs.level);
 }
