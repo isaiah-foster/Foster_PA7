@@ -83,7 +83,8 @@ void Menu::runProgram()
 		case 2:
 			if (!stored)
 			{
-				std::cout << "please store to master list first";
+				std::cout << "please store to master list first" << endl;
+				system("pause");
 			}
 			else
 			{
@@ -94,7 +95,8 @@ void Menu::runProgram()
 		case 3:
 			if (!loaded)
 			{
-				std::cout << "please import records first first";
+				std::cout << "please import records first first" << endl;
+				system("pause");
 			}
 			else
 			{
@@ -106,14 +108,29 @@ void Menu::runProgram()
 		
 			break;
 		case 4:
-			
-
+			if (!loaded)
+			{
+				std::cout << "please import records first first " << endl;
+				system("pause");
+			}
+			else
+			{
+				recordList.markAbsences();
+			}
 			break;
 		case 5:
 			std::cout << "Edit Absences functionality not implemented." << std::endl;
 			break;
 		case 6:
-			std::cout << "Generate Report functionality not implemented." << std::endl;
+			if (!loaded)
+			{
+				std::cout << "please import records first first " << endl;
+				system("pause");
+			}
+			else
+			{
+				recordList.generateReports();
+			}
 			break;
 		case 7:
 			std::cout << "Exiting program." << std::endl;

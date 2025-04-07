@@ -12,10 +12,13 @@
 #include <fstream>
 #include <stack>
 #include <string>
+#include <sstream>
 using std::string;
 using std::istream;
 using std::ostream;
 using std::getline;
+using std::cout;
+using std::endl;
 
 class RecordData
 {
@@ -33,10 +36,14 @@ private:
 
 public:
 	RecordData();
-	int getAbsences();
+	void markAbsent();
 	friend void operator>>(istream& lhs, RecordData& rhs);
-	friend ostream& operator<<(ostream& lhs, const RecordData& rhs);
+	friend ostream& operator<<(ostream& lhs, RecordData rhs);
 	void readMasterRecord(istream& master);
+	void pop();
+	int getAbsences() const { return absences; }
+	string getName() const { return name; }
+	std::stack<string> getAbsenceDates() const { return absenceDates; }
 };
 
 RecordData::RecordData()
@@ -70,13 +77,17 @@ void operator>>(istream& lhs, RecordData& rhs)
 	getline(lhs, rhs.level);
 }
 
-ostream& operator<<(ostream& lhs, const RecordData& rhs)
+ostream& operator<<(ostream& lhs, RecordData rhs)
 {
-	lhs << rhs.recordNumber << "," << rhs.IDNumber << "," << rhs.name << "," << rhs.email << "," << rhs.units << "," << rhs.program << "," << rhs.level << "," << rhs.absences;
+	lhs << rhs.recordNumber << "," << rhs.IDNumber << "," << rhs.name << "," << rhs.email << "," << rhs.units << "," << rhs.program << "," << rhs.level << "," << rhs.absences << ',';
 	for (int i = 0; i < rhs.absences; i++)
 	{
-		if (i != 0) lhs << ",";
-		lhs << rhs.absenceDates.top() << ",";
+		
+		std::stack<string> temp;
+		temp.push(rhs.absenceDates.top());
+		lhs << temp.top();
+		rhs.pop();
+		lhs << ","; //add a comma after each date
 	}
 	return lhs;
 }
@@ -96,11 +107,51 @@ void RecordData::readMasterRecord(istream& master)
 	getline(master, units, ',');
 	getline(master, program, ',');
 	getline(master, level, ',');
-	getline(master, temp);
+	getline(master, temp, ',');
 	absences = stoi(temp);
-	for (int i = 0; i < stoi(temp); i++)
+	for (int i = 0; i < absences; i++)
 	{
-		getline(master, temp, ',');
-		absenceDates.push(temp);
+		if (i + 1 < absences)
+		{
+			getline(master, temp, ',');
+			absenceDates.push(temp);
+		}
+		else
+		{
+			getline(master, temp);
+			temp[temp.length() - 1] = '\0';
+			absenceDates.push(temp);
+		}
+
 	}
+}
+
+void RecordData::markAbsent()
+{
+	char absent = '\0';
+	cout << "Is " << name << " absent? (y/n): ";
+	std::cin >> absent;
+
+	if (absent == 'y')
+	{
+		time_t t = time(0); // get time now
+		struct tm* now = localtime(&t);
+		std::ostringstream dateStream;
+		dateStream << (now->tm_year + 1900) << '-'
+			<< (now->tm_mon + 1) << '-'
+			<< now->tm_mday;
+		string dateString = dateStream.str();
+		absenceDates.push(dateString);
+		absences++;
+		cout << "Absence recorded for " << name << " on " << dateString << endl << endl;
+	}
+	else
+	{
+		cout << "No absence recorded for " << name << endl << endl;
+	}
+}
+
+void RecordData::pop()
+{
+	absenceDates.pop();
 }

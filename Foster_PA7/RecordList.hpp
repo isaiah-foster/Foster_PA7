@@ -9,6 +9,7 @@
 */
 #pragma once
 #include "ListNode.hpp"
+using std::cin;
 
 template <typename T>
 class RecordList
@@ -27,6 +28,7 @@ public:
 	void importMaster(const std::string& filename);
 	void store(const std::string& filename);
 	void markAbsences();
+	void generateReports();
 };
 
 template <typename T>
@@ -142,6 +144,63 @@ void RecordList<T>::store(const std::string& filename)
 template <typename T>
 void RecordList<T>::markAbsences()
 {
-	ListNode<T>* current = pHead;
-	//work on this next
+	ListNode<RecordData>* current = pHead;
+	while (current != nullptr)
+	{
+		current->getData().markAbsent(); //make sure this actually edits list data
+		current = current->getNext();
+	}
+	system("pause");
+}
+
+template <typename T>
+void RecordList<T>::generateReports()
+{
+	int choice = 0;
+	cout << "(1) Generate absence count report" << endl << "(2) Generate report of all students at or above x absences" << endl;
+	cin >> choice;
+	if (choice == 1)
+	{
+		std::ofstream file("report1.txt");
+		ListNode<RecordData>* current = pHead;
+		while (current != nullptr)
+		{
+			file << current->getData().getName() << ",";
+			file << current->getData().getAbsences() << ",";
+			if (!current->getData().getAbsenceDates().empty())
+			{
+				file << current->getData().getAbsenceDates().top() << endl;
+			}
+			else
+			{
+				file << "No absences recorded" << endl;
+			}
+			current = current->getNext();
+		}
+		cout << "Report generated successfully." << endl;
+		system("pause");
+	}
+	else if (choice == 2)
+	{
+		std::ofstream file("report2.txt");
+		int x = 0;
+		cout << "Enter absences threshold x: ";
+		cin >> x;
+		ListNode<RecordData>* current = pHead;
+		while (current != nullptr)
+		{
+			if (current->getData().getAbsences() >= x)
+			{
+				file << current->getData().getName() << endl;
+			}
+			current = current->getNext();
+		}
+		cout << "Report generated successfully." << endl;
+		system("pause");
+	}
+	else
+	{
+		cout << "Invalid choice." << endl;
+		system("pause");
+	}
 }

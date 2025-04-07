@@ -26,6 +26,12 @@
     <None Include="master.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="report1.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="report2.txt">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RecordData.hpp">

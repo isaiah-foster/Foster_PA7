@@ -7,6 +7,7 @@
 * Last updated: 03/28/2025
 * Description: Defines ListNode class to store RecordData object
 */
+#define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include "RecordData.hpp"
 
@@ -16,14 +17,13 @@ class ListNode
 private:
 	T data;
 	ListNode<T>* pNext;
-
 public:
 
 	ListNode(const T& data); 
 	~ListNode();
-	T getData() const;
+	T& getData();
 	ListNode<T>* getNext() const;
-	void setNext(ListNode<T>* next);
+	void setNext(ListNode<T>* next) { pNext = next; }
 };
 
 template <typename T>
@@ -39,7 +39,7 @@ ListNode<T>::~ListNode()
 }
 
 template <typename T>
-T ListNode<T>::getData() const
+T& ListNode<T>::getData()
 {
 	return data;
 }
@@ -48,10 +48,4 @@ template <typename T>
 ListNode<T>* ListNode<T>::getNext() const
 {
 	return pNext;
-}
-
-template <typename T>
-void ListNode<T>::setNext(ListNode<T>* next)
-{
-	pNext = next;
 }

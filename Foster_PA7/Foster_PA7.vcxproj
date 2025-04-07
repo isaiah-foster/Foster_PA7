@@ -187,6 +187,8 @@
   <ItemGroup>
     <None Include="master.csv" />
     <None Include="records.csv" />
+    <None Include="report2.txt" />
+    <None Include="report1.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ListNode.hpp" />
