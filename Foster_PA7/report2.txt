@@ -1,6 +1,0 @@
-"Mort,Kris"
-"Willis,Bruce"
-"Payton,Ella"
-"Art,Bruce"
-"Beck,Sara"
-"Smith,John"

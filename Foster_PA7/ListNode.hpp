@@ -4,7 +4,7 @@
 * Class: Cpts_122
 * Assignment: PA6
 * Created: 03/28/2025
-* Last updated: 03/28/2025
+* Last updated: 04/07/2025
 * Description: Defines ListNode class to store RecordData object
 */
 #define _CRT_SECURE_NO_WARNINGS

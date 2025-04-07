@@ -4,7 +4,7 @@
 * Class: Cpts_122
 * Assignment: PA6
 * Created: 03/28/2025
-* Last updated: 03/28/2025
+* Last updated: 04/072025
 * Description: Defines RecordData class to store data for a record
 */
 #pragma once

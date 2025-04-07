@@ -4,7 +4,7 @@
 * Class: Cpts_122
 * Assignment: PA6
 * Created: 03/28/2025
-* Last updated: 03/28/2025
+* Last updated: 04/07/2025
 * Description: Defines RecordList class to store ListNodes of RecordData objects
 */
 #pragma once
@@ -111,10 +111,12 @@ void RecordList<T>::importMaster(const std:: string& filename)
 		return;
 	}
 	RecordData temp;
-	while (!file.eof())
+	int numStudents = 10, i=0;
+	while (i<numStudents)
 	{
 		temp.readMasterRecord(file);
 		insertAtFront(temp);
+		i++;
 	}
 	file.close();
 }

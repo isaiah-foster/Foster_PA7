@@ -4,7 +4,7 @@
 * Class: Cpts_122
 * Assignment: PA6
 * Created: 03/24/2025
-* Last updated: 03/24/2025
+* Last updated: 04/07/2025
 * Description: Defines the menu class that gives the user a cmd display of options
 */
 #pragma once
@@ -35,9 +35,8 @@ void Menu::displayMenu() const
 	std::cout << "2. Load Master List" << std::endl;
 	std::cout << "3. Store to Master List" << std::endl;
 	std::cout << "4. Mark Absences" << std::endl;
-	std::cout << "5. Edit Absences" << std::endl;
-	std::cout << "6. Generate Report" << std::endl;
-	std::cout << "7. Exit" << std::endl;
+	std::cout << "5. Generate Report" << std::endl;
+	std::cout << "6. Exit" << std::endl;
 }
 
 int Menu::getUserChoice() const
@@ -119,9 +118,6 @@ void Menu::runProgram()
 			}
 			break;
 		case 5:
-			std::cout << "Edit Absences functionality not implemented." << std::endl;
-			break;
-		case 6:
 			if (!loaded)
 			{
 				std::cout << "please import records first first " << endl;
@@ -132,7 +128,7 @@ void Menu::runProgram()
 				recordList.generateReports();
 			}
 			break;
-		case 7:
+		case 6:
 			std::cout << "Exiting program." << std::endl;
 			exit(0);
 			break;
