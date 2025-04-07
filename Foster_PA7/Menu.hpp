@@ -33,7 +33,7 @@ void Menu::displayMenu() const
 	system("cls");
 	std::cout << "1. Import Records" << std::endl;
 	std::cout << "2. Load Master List" << std::endl;
-	std::cout << "3. Store Master List" << std::endl;
+	std::cout << "3. Store to Master List" << std::endl;
 	std::cout << "4. Mark Absences" << std::endl;
 	std::cout << "5. Edit Absences" << std::endl;
 	std::cout << "6. Generate Report" << std::endl;
@@ -83,7 +83,7 @@ void Menu::runProgram()
 		case 2:
 			if (!stored)
 			{
-				std::cout << "please store course list first";
+				std::cout << "please store to master list first";
 			}
 			else
 			{
@@ -92,13 +92,22 @@ void Menu::runProgram()
 			}
 			break;
 		case 3:
-			recordList.store("master.csv");
-			stored = 1;
-			std::cout << "Master list stored successfully." << std::endl;
-			system("pause");
+			if (!loaded)
+			{
+				std::cout << "please import records first first";
+			}
+			else
+			{
+				recordList.store("master.csv");
+				stored = 1;
+				std::cout << "Master list stored successfully." << std::endl;
+				system("pause");
+			}
+		
 			break;
 		case 4:
-			std::cout << "Mark Absences functionality not implemented." << std::endl;
+			
+
 			break;
 		case 5:
 			std::cout << "Edit Absences functionality not implemented." << std::endl;

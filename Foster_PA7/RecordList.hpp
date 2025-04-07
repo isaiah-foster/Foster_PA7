@@ -23,10 +23,10 @@ public:
 	void removeFromFront();
 	bool isEmpty() const;
 	void destroy();
-	void print() const;
 	void import(const std::string& filename);
 	void importMaster(const std::string& filename);
 	void store(const std::string& filename);
+	void markAbsences();
 };
 
 template <typename T>
@@ -78,18 +78,6 @@ void RecordList<T>::destroy()
 }
 
 template <typename T>
-void RecordList<T>::print() const
-{
-	ListNode<T>* current = pHead;
-	while (current != nullptr)
-	{
-		std::cout << current->data << " ";
-		current = current->pNext;
-	}
-	std::cout << std::endl;
-}
-
-template <typename T>
 void RecordList<T>::import(const std::string& filename)
 {
 	std::ifstream file(filename);
@@ -99,6 +87,9 @@ void RecordList<T>::import(const std::string& filename)
 		return;
 	}
 	T data;
+	this->destroy();
+	string temp;
+	getline(file, temp); //get rid of first line
 	while (!file.eof())
 	{
 	file >> data;
@@ -110,18 +101,18 @@ void RecordList<T>::import(const std::string& filename)
 template <typename T>
 void RecordList<T>::importMaster(const std:: string& filename)
 {
+	this->destroy();
 	std::ifstream file(filename);
 	if (!file)
 	{
 		std::cerr << "Error opening file: " << filename << std::endl;
 		return;
 	}
-	T data;
+	RecordData temp;
 	while (!file.eof())
 	{
-		file >> data;
-
-		insertAtFront(data);
+		temp.readMasterRecord(file);
+		insertAtFront(temp);
 	}
 	file.close();
 }
@@ -138,8 +129,19 @@ void RecordList<T>::store(const std::string& filename)
 	ListNode<RecordData>* current = pHead;
 	while (current != nullptr)
 	{
-		file << current->getData() << std::endl;
+		file << current->getData();
+		if (current->getNext() != nullptr)
+		{
+			file << std::endl;
+		}
 		current = current->getNext() ;
 	}
 	file.close();
+}
+
+template <typename T>
+void RecordList<T>::markAbsences()
+{
+	ListNode<T>* current = pHead;
+	//work on this next
 }

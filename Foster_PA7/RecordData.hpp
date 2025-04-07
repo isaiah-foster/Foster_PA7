@@ -36,6 +36,7 @@ public:
 	int getAbsences();
 	friend void operator>>(istream& lhs, RecordData& rhs);
 	friend ostream& operator<<(ostream& lhs, const RecordData& rhs);
+	void readMasterRecord(istream& master);
 };
 
 RecordData::RecordData()
@@ -55,13 +56,13 @@ RecordData::RecordData()
 void operator>>(istream& lhs, RecordData& rhs)
 {	
 	string temp;
-	getline(lhs, temp); //get rid of first line
 	getline(lhs, temp, ',');
 	rhs.recordNumber = std::stoi(temp);
 	getline(lhs, temp, ',');
 	rhs.IDNumber = std::stoi(temp);
-	getline(lhs, rhs.name, '"');
-	getline(lhs, rhs.name, '"');
+	getline(lhs, temp, '"');
+	getline(lhs, temp, '"');
+	rhs.name = "\"" + temp + "\"";
 	getline(lhs, rhs.email, ',');
 	getline(lhs, rhs.email, ',');
 	getline(lhs, rhs.units, ',');
@@ -71,6 +72,35 @@ void operator>>(istream& lhs, RecordData& rhs)
 
 ostream& operator<<(ostream& lhs, const RecordData& rhs)
 {
-	lhs << rhs.recordNumber << "," << rhs.IDNumber << "," << rhs.name << "," << rhs.email << "," << rhs.units << "," << rhs.program << "," << rhs.level;
+	lhs << rhs.recordNumber << "," << rhs.IDNumber << "," << rhs.name << "," << rhs.email << "," << rhs.units << "," << rhs.program << "," << rhs.level << "," << rhs.absences;
+	for (int i = 0; i < rhs.absences; i++)
+	{
+		if (i != 0) lhs << ",";
+		lhs << rhs.absenceDates.top() << ",";
+	}
 	return lhs;
+}
+
+void RecordData::readMasterRecord(istream& master) 
+{
+	string temp;
+	getline(master, temp, ',');
+	recordNumber = stoi(temp);
+	getline(master, temp, ',');
+	IDNumber = stoi(temp);
+	getline(master, temp, '"');
+	getline(master, temp, '"');
+	name = "\"" + temp + "\"";
+	getline(master, email, ',');
+	getline(master, email, ',');
+	getline(master, units, ',');
+	getline(master, program, ',');
+	getline(master, level, ',');
+	getline(master, temp);
+	absences = stoi(temp);
+	for (int i = 0; i < stoi(temp); i++)
+	{
+		getline(master, temp, ',');
+		absenceDates.push(temp);
+	}
 }
